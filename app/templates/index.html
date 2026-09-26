@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cloud Notes App</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <h1>☁️ Cloud Notes</h1>
+
+            <p>
+                My Cloud Services & Web Application Project
+            </p>
+        </header>
+
+
+        <!-- Add Note Section -->
+        <section class="card">
+
+            <h2>📝 Add a New Note</h2>
+
+            <form
+                action="{{ url_for('create_note') }}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <!-- Note -->
+                <label for="note">
+                    Your Note
+                </label>
+
+                <textarea
+                    id="note"
+                    name="note"
+                    placeholder="Write your note here..."
+                    required
+                ></textarea>
+
+
+                <!-- File Upload -->
+                <label for="file">
+                    📎 Attach a File
+                </label>
+
+                <input
+                    type="file"
+                    id="file"
+                    name="file"
+                >
+
+                <p class="file-help">
+                    You can upload an image, PDF, document, or other file.
+                </p>
+
+
+                <!-- Submit -->
+                <button type="submit">
+                    ➕ Add Note
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Notes Section -->
+        <section class="card">
+
+            <h2>📚 My Notes</h2>
+
+            {% if notes %}
+
+                <div class="notes">
+
+                    {% for note in notes %}
+
+                        <div class="note">
+
+                            <div class="note-content">
+
+                                <p>
+                                    {{ note }}
+                                </p>
+
+                            </div>
+
+
+                            <!-- Delete -->
+                            <form
+                                action="{{ url_for('remove_note', note_id=loop.index0) }}"
+                                method="POST"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                >
+                                    🗑️ Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty">
+                    No notes yet.
+                    Add your first note above.
+                </p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- Application Status -->
+        <section class="status">
+
+            <h3>🟢 Application Status</h3>
+
+            <p>
+                Application is running successfully
+            </p>
+
+            <p>
+                ☁️ Files are stored in Amazon S3
+            </p>
+
+            <p>
+                🗄️ Notes are stored in PostgreSQL
+            </p>
+
+            <p>
+                Current Version: Cloud Deployment
+            </p>
+
+        </section>
+
+
+        <!-- Architecture -->
+        <section class="card architecture">
+
+            <h2>☁️ Cloud Architecture</h2>
+
+            <div class="architecture-grid">
+
+                <div class="architecture-item">
+                    <strong>🌐 Flask</strong>
+                    <span>Web Application</span>
+                </div>
+
+                <div class="architecture-item">
+                    <strong>🖥️ EC2</strong>
+                    <span>Application Server</span>
+                </div>
+
+                <div class="architecture-item">
+                    <strong>🗄️ RDS</strong>
+                    <span>PostgreSQL Database</span>
+                </div>
+
+                <div class="architecture-item">
+                    <strong>📦 S3</strong>
+                    <span>File Storage</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <p>
+                Cloud Services & Web App Deployment
+            </p>
+
+            <p>
+                Built with Python + Flask + AWS
+            </p>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
